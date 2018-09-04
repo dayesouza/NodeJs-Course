@@ -1,0 +1,14 @@
+{
+  "name": "news_portal",
+  "version": "1.0.0",
+  "description": "News Website",
+  "main": "news.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Day Souza",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
