@@ -1,16 +1,15 @@
+var dbConnection = require('../../config/dbConfig');
+
 module.exports = function (app) {
   app.get('/newsletter', function (req, res) {
 
-  var mysql = require('mysql');
-  var connect_str = require('../../config/mysql_config');
-console.log(connect_str());
-  var connection = mysql.createConnection(connect_str());
+  connection = dbConnection();
 
   connection.query("select * from tab_news",function(error,result){
-    res.send(result);
+    res.render("news/newsletter", {news_list: result});
   });
 
-    //res.render("news/newsletter");
+
   });
 
 }
