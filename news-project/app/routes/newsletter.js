@@ -1,13 +1,14 @@
-var dbConnection = require('../../config/dbConfig');
-
 module.exports = function (app) {
+
   app.get('/newsletter', function (req, res) {
 
-  connection = dbConnection();
+    var connection = app.config.dbConfig();
 
-  connection.query("select * from tab_news",function(error,result){
-    res.render("news/newsletter", {news_list: result});
-  });
+    var newsModel = app.app.models.newsModel;
+
+    newsModel.getNewsletter(connection, function (error, result) {
+      res.render("news/newsletter", { news_list: result });
+    });
 
 
   });
