@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-	<html lang="pt-br">
-		<head>
-			<meta charset="utf-8"/>
-			<title>Form to create news</title>
-		</head>
-	<body>
+<html lang="pt-br">
 
-		<h1>Add news</h1>
+<head>
+	<meta charset="utf-8" />
+	<title>Form to create news</title>
+</head>
 
-	</body>
+<body>
+
+	<h1>Add news</h1>
+	<br />
+
+	<form action="news/save" method="POST">
+		<label>Title</label>
+		<input type="text" id="title" name="title" placeholder="Title of the news" />
+		<br />
+		<label>
+			
+		</label>
+		<textarea id="news" name="news" rows="5" cols="30">
+
+</textarea>
+		<br />
+		<input type="submit" value="Send" />
+	</form>
+ 
+</body>
+
 </html>
