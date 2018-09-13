@@ -1,13 +1,15 @@
 var express = require('express');
 var consign = require('consign');
 var bodyParser = require('body-parser');
+var validator = require('express-validator');
 
 var app = express();
 app.set('views','./app/views');
 app.set('view engine','ejs');
 
 //middleware request and response
-app.use(bodyParser.urlencoded({ectended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(validator());
 
 //Include modules from folder routes into the app
 consign()

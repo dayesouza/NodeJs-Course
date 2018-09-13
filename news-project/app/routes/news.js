@@ -6,7 +6,7 @@ module.exports = function (app) {
     var newsModel = new app.app.models.NewsDAO(connection);
 
     newsModel.getNews(function (error, result) {
-      res.render("news/news", { news: result });
+      res.render("/news/news", { news: result });
     });
 
 

@@ -11,20 +11,45 @@
 	<h1>Add news</h1>
 	<br />
 
-	<form action="news/save" method="POST">
-		<label>Title</label>
-		<input type="text" id="title" name="title" placeholder="Title of the news" />
-		<br />
-		<label>
-			
-		</label>
-		<textarea id="news" name="news" rows="5" cols="30">
+	<% if(validation){ %>
+		<ul>
+			<% for (var i = 0; i < validation.length; i++){ %>
+				<li>
+					<%= validation[i].msg %>
+				</li>
+				<% }%>
+		</ul>
+		<% } %>
 
-</textarea>
-		<br />
-		<input type="submit" value="Send" />
-	</form>
- 
+			<form action="/news/save" method="POST">
+				<label>Title</label>
+				<input type="text" id="title" name="title" value="<%=news.title%>" placeholder="Title of the news" />
+				<br />
+				<label>
+
+					<label>Summary</label>
+					<input type="text" id="summary" name="summary" value="<%=news.summary%>" placeholder="News Summary" />
+					<br />
+					<label>
+
+						<label>Author</label>
+						<input type="text" id="author" name="author" value="<%=news.author%>" placeholder="Author of the News" />
+						<br />
+						<label>
+
+							<label>Event Date</label>
+							<input type="date" id="event_date" name="event_date" value="<%=news.event_date%>" placeholder="Event Date" />
+							<br />
+							<label>
+
+							</label>
+							<textarea id="news" name="news" rows="5" cols="30">
+									<%=news.news%>
+							</textarea>
+							<br />
+							<input type="submit" value="Send" />
+			</form>
+
 </body>
 
 </html>
