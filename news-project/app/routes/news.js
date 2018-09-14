@@ -1,15 +1,11 @@
 module.exports = function (app) {
 
   app.get('/news', function (req, res) {
+    app.app.controllers.newsC.news(app, req, res);
+  });
 
-    var connection = app.config.dbConfig();
-    var newsModel = new app.app.models.NewsDAO(connection);
-
-    newsModel.getNews(function (error, result) {
-      res.render("/news/news", { news: result });
-    });
-
-
+  app.get('/newsletter', function (req, res) {
+    app.app.controllers.newsC.newsletter(app, req, res);
   });
 
 }
