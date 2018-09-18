@@ -1,0 +1,6 @@
+With Mysql:
+create database news_portal;
+use database news_portal;
+
+create table tab_news( id int not null primary key auto_increment, title varchar(100) not null, author varchar(80), event_date datetime, summary varchar(100), news varchar(500), create_date datetime default current_timestamp);
+
