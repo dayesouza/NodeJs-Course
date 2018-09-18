@@ -7,6 +7,7 @@ var app = express();
 app.set('views','./app/views');
 app.set('view engine','ejs');
 
+app.use(express.static('./app/public'));
 //middleware request and response
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(validator());
