@@ -33,13 +33,24 @@
 					<span class="icon-bar"></span>
 				</button>
 
-				<img src="images/logo.png" />
+				<a href="/">
+					<img src="images/logo.png" />
+				</a>
 			</div>
 
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="index.html">HOME</a>
+						<a href="/">HOME</a>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="/newsletter">Newsletter</a>
+					</li>
+					<li>
+						<a href="/form_add">Add News</a>
 					</li>
 				</ul>
 			</div>
@@ -51,12 +62,12 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="news_wrapper">
-					<span class="news_author">
-						<%= news[0].author%>
+					<span class="text-info clearfix">
+						<strong><%= news[0].author %></strong>
 					</span>
-					<a href="news" class="news_title">
+					<span class="news_title">
 						<%= news[0].title%>
-					</a>
+					</span>
 					<span class="event_date">
 						<%= news[0].event_date%>
 					</span>

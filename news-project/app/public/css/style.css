@@ -2,11 +2,6 @@ body{
 	background:#F8F8F8;
 }
 
-a:hover{
-	text-decoration: none;
-	color:#000;
-}
-
 .news_wrapper{
 	background-color: #FFF;
 	padding:15px;
@@ -16,11 +11,6 @@ a:hover{
 
 .navbar{
 	background:#FFF;
-}
-
-.news_author{
-	color: #FF7C26;
-	display: block;
 }
 
 .news_title{
