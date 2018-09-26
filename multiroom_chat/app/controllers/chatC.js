@@ -11,5 +11,10 @@ module.exports.startChat = function (app, req, res) {
     return;
   }
 
+  app.get('io').emit(
+    'msgToClient',
+    {nickname: params.nickname, message: ' joined the chat'}
+  );
+
   res.render("chat");
 } 
