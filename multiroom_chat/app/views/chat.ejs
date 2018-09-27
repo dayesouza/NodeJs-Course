@@ -85,18 +85,13 @@
 
 		<div class="row participants" id="participants" style="display:none">
 			<div class="col-md-1"></div>
-			<div class="col-md-10">
-				<span class="participant">
+			<div class="col-md-10" id='people'>
+				<!-- <span class="participant">
 					<img src="images/ico_user.png" /> Jorge
-				</span>
+				</span> -->
 
-				<span class="participant">
-					<img src="images/ico_user.png" /> Joseph
-				</span>
 
-				<span class="participant">
-					<img src="images/ico_user.png" /> Fernando
-				</span>
+
 			</div>
 			<div class="col-md-1"></div>
 
@@ -106,16 +101,19 @@
 	<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 		<div class="container">
 			<div class="panel-body field-message">
-				<form>
-					<div class="col-md-12">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Message">
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button">></button>
-							</span>
-						</div>
+
+
+				<div class="col-md-12">
+					<div class="input-group">
+						<input type="text" class="form-control" id='message' placeholder="Message">
+						<input type="hidden" value="<%= params.nickname%>" id='nickname'>
+						<span class="input-group-btn">
+							<button class="btn btn-default" id='send_text' type="button">></button>
+						</span>
 					</div>
-				</form>
+				</div>
+
+
 			</div>
 		</div>
 	</nav>
@@ -128,16 +126,35 @@
 	<script>
 		var socket = io('http://localhost:3000');
 
-		socket.on('msgToClient',function(data){
-			console.log(data);
-			alert(data.nickname+ " "+data.message);
+		$("#send_text").click(function () {
+			socket.emit(
+				'msgToServer',
+				{ nickname: $("#nickname").val(), message: $("#message").val() }
+			)
+			$("#message").val("");
+
+		})
+
+		socket.on('msgToClient', function (data) {
 			var html = '';
 
-			html+='<div class="dialog">';
-			html+='<h4 class="">'+data.nickname+' </h4>';
-			html+='<p>'+data.message+' </p>';
-			html+='</div>';
-				$("#conversations").append(html);
+			html += '<div class="dialog">';
+			html += '<h4 class="">' + data.nickname + ' </h4>';
+			html += '<p>' + data.message + ' </p>';
+			html += '</div>';
+			$("#conversations").append(html);
+
+			//Make the window scroll on new message received
+			window.scrollTo(0, document.body.scrollHeight);
+		})
+
+		socket.on('updateParticipants', function (data) {
+			var html = '';
+			console.log(data);
+			html += '<span class="participant"><img src="images/ico_user.png" /> ';
+			html += data.nickname;
+			html += ' </span>';
+			$("#people").append(html);
 		})
 
 

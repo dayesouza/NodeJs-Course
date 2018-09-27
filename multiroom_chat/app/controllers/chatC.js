@@ -15,6 +15,11 @@ module.exports.startChat = function (app, req, res) {
     'msgToClient',
     {nickname: params.nickname, message: ' joined the chat'}
   );
+  
+  app.get('io').emit(
+    'updateParticipants',
+    {nickname: params.nickname}
+  );
 
-  res.render("chat");
+  res.render("chat",{params: params});
 } 

@@ -20,6 +20,13 @@ io.on('connection',function(socket){
     console.log('User left');
   });
 
+  socket.on('msgToServer',function(data){
+    socket.emit('msgToClient',data);
+
+    socket.broadcast.emit('msgToClient',data);
+    
+  })
+
 
 
 });
