@@ -13,10 +13,13 @@ app.set('io', io );
 
 /* Create websocket connection */
 
+var array_participants = [];
 io.on('connection',function(socket){
   console.log("Socket connection");
 
-  socket.on('disconnect',function(){
+
+
+  socket.on('disconnect',function(data){
     console.log('User left');
   });
 

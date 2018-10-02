@@ -137,6 +137,9 @@
 
 		socket.on('msgToClient', function (data) {
 			var html = '';
+			if($("#"+data.nickname).length == 0){
+				addParticipant(data.nickname);
+			}
 
 			html += '<div class="dialog">';
 			html += '<h4 class="">' + data.nickname + ' </h4>';
@@ -149,14 +152,16 @@
 		})
 
 		socket.on('updateParticipants', function (data) {
-			var html = '';
-			console.log(data);
-			html += '<span class="participant"><img src="images/ico_user.png" /> ';
-			html += data.nickname;
-			html += ' </span>';
-			$("#people").append(html);
+			addParticipant(data.nickname);
 		})
 
+		function addParticipant(nickname){
+			var html = '';
+			html += '<span class="participant" id="'+nickname+'"><img src="images/ico_user.png" /> ';
+			html += nickname;
+			html += ' </span>';
+			$("#people").append(html);
+		}
 
 	</script>
 
