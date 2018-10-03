@@ -1,16 +1,5 @@
-Packages installed for news-project:
+Folder with projects made learning NodeJs and MongoDB with the following Brazilian course from Udemy:
+https://www.udemy.com/curso-completo-do-desenvolvedor-nodejs
 
-Framework:
-`npm install express --save`
-
-Template:
-`npm install ejs --save`
-
-Development helper, updates the code on server on save:
-`npm install -g nodemon`
-
-Database:
-`npm install mysql --save`
-
-Automated script loading:
-`npm install consign --save`
+Installed MongoDB using the following instructions:
+https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
