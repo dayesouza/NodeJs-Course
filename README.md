@@ -24,10 +24,16 @@ db.students.find().pretty() --Returns all the documents in a nice way
 
 db.students.find({age: {$gt:20}}) --Returns every document where the age is greater than 20 (you can put .pretty() in the end)
 
-Operadores SQL vs MongoDB:
+Operadores SQL vs MongoDB
+
 = $eq
+
 > $gt
+
 >= $gte
+
 < $lt
+
 <= $ltr
+
 != $ne
