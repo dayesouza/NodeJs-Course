@@ -24,6 +24,20 @@ db.students.find().pretty() --Returns all the documents in a nice way
 
 db.students.find({age: {$gt:20}}) --Returns every document where the age is greater than 20 (you can put .pretty() in the end)
 
+db.students.find({sex: {$eq:'F'},age: {$gt: 30}}); -- AND
+
+db.students.find({$or: [{sex: {$eq:'F'}},{age: {$gt: 30}}]}).pretty(); --OR
+
+db.students.update({parameters for the condition},{$set: {param: "value"}},{multi: true}); //Multi if everyone or just the first found
+Example: db.students.update({name: "Day"},{$set: {name: "Daydois"}});
+
+remove({name: "Daydois"}, just_one_boolean);
+
+save(//update the entire document or includes a new one
+  _id: xxxxx
+)
+
+
 Operadores SQL vs MongoDB
 
 = $eq
