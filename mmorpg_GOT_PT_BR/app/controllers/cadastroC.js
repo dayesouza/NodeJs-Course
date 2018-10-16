@@ -17,6 +17,11 @@ module.exports.cadastrar = function(app, req,res){
     res.render('cadastro',{validacao: erros, dadosForm: dados_form})
     return;
   }
+
+  var dbConn = app.config.dbConnection;
+
+  var usuariosDAO = new app.app.models.UsuariosDAO(dbConn);
+  usuariosDAO.inserirUsuario(dados_form);
   
   res.send('ok');
 }
