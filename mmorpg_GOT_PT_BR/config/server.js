@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
 /* configura o middleware express-session*/
 app.use(expressSession({
-	secret: '',
+	secret: 'secretttt6',
 	resave: false,
 	saveUninitialized: false
 }));
