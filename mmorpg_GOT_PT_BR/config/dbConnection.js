@@ -1,7 +1,6 @@
 /* Importar mongodb */
 var mongo = require('mongodb');
 
-
 var connMongoDB = function(){
 
   var db = new mongo.Db(
