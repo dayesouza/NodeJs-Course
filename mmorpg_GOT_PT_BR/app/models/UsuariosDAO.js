@@ -19,23 +19,23 @@ UsuariosDAO.prototype.autenticar = function (usuario, req, res) {//Metodo da cla
     mongoclient.collection("usuarios", function(err, collection){//Pega a coleção
         // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
         collection.find(usuario).toArray(function(err, result){
-          console.log(result);
           if(result[0] != undefined){
             req.session.autorizado = true;
             req.session.usuario = result[0].usuario;
             req.session.casa = result[0].casa;
           }
+
+          mongoclient.close();
+          
           if(req.session.autorizado){
             res.redirect("jogo");
+            return;
           }
           else{
             res.render("index", {validacao: {}});
           }
         });
 
-
-
-      mongoclient.close();
     });
   });
 
