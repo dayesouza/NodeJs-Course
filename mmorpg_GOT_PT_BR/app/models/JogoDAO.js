@@ -23,7 +23,7 @@ JogoDAO.prototype.gerarParametros = function(usuario) {
   });
 };
 
-JogoDAO.prototype.iniciaJogo = function(res, usuario,casa) {
+JogoDAO.prototype.iniciaJogo = function(res, usuario,casa, comando_invalido) {
   this._connection.open(function(err, mongoclient) {
     //abri conexao com o servidor e db
     mongoclient.collection("jogos", function(err, collection) {
@@ -31,8 +31,8 @@ JogoDAO.prototype.iniciaJogo = function(res, usuario,casa) {
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       collection.find({ usuario: usuario }).toArray(function(err, result) {
 
-
-        res.render("jogo", {img_casa: casa, jogo: result[0]})
+console.log(comando_invalido);
+        res.render("jogo", {img_casa: casa, jogo: result[0], comando_invalido: comando_invalido})
 
         mongoclient.close();
       });
