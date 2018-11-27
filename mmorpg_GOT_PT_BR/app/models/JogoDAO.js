@@ -46,7 +46,7 @@ JogoDAO.prototype.acao = function(acao) {
 
   this._connection.open(function(err, mongoclient) {
     //abri conexao com o servidor e db
-    mongoclient.collection("acao", function(err, collection) {
+    mongoclient.collection("acoes", function(err, collection) {
       //Pega a coleção
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       var date = new Date();
@@ -57,6 +57,26 @@ JogoDAO.prototype.acao = function(acao) {
       mongoclient.close();
     });
   });
+};
+
+JogoDAO.prototype.getAcoes = function(usuario, res) {
+  this._connection.open(function(err, mongoclient) {
+    //abri conexao com o servidor e db
+    mongoclient.collection("acoes", function(err, collection) {
+      //Pega a coleção
+      // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
+      collection.find({ usuario: usuario }).toArray(function(err, result) {
+
+
+        res.render("pergaminhos", {acoes: result});
+        
+        mongoclient.close();
+      });
+
+      mongoclient.close();
+    });
+  });
+
 };
 
 module.exports = function() {

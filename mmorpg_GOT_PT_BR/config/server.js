@@ -33,7 +33,8 @@ app.use(expressValidator());
 app.use(expressSession({
 	secret: 'secretttt6',
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	maxAge: null 
 }));
 
 /* efetua o autoload das rotas, dos models e dos controllers para o objeto app */
