@@ -23,7 +23,7 @@ JogoDAO.prototype.gerarParametros = function(usuario) {
   });
 };
 
-JogoDAO.prototype.iniciaJogo = function(res, usuario,casa, comando_invalido) {
+JogoDAO.prototype.iniciaJogo = function(res, usuario,casa, msg) {
   this._connection.open(function(err, mongoclient) {
     //abri conexao com o servidor e db
     mongoclient.collection("jogos", function(err, collection) {
@@ -31,12 +31,29 @@ JogoDAO.prototype.iniciaJogo = function(res, usuario,casa, comando_invalido) {
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       collection.find({ usuario: usuario }).toArray(function(err, result) {
 
-console.log(comando_invalido);
-        res.render("jogo", {img_casa: casa, jogo: result[0], comando_invalido: comando_invalido})
+
+        res.render("jogo", {img_casa: casa, jogo: result[0], msg: msg})
 
         mongoclient.close();
       });
 
+      mongoclient.close();
+    });
+  });
+};
+
+JogoDAO.prototype.acao = function(acao) {
+
+  this._connection.open(function(err, mongoclient) {
+    //abri conexao com o servidor e db
+    mongoclient.collection("acao", function(err, collection) {
+      //Pega a coleção
+      // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
+      var date = new Date();
+
+      //TODO: Criar na base as acoes e pegar o tempo necessario dela
+      acao.termina_em = date.getTime() +300000; //default 5 minutos
+      collection.insert(acao); 
       mongoclient.close();
     });
   });

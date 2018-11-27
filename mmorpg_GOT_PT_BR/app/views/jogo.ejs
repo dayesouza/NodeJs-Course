@@ -17,7 +17,7 @@
 		<script>
 		$(document).ready(function(){
 			$('#btn_suditos').click(function(){
-				$(".msg_erro").hide();
+				$(".msg").hide();
 				$.ajax({
 					url: '/suditos',
 					method: 'GET',
@@ -28,7 +28,7 @@
 			})
 
 			$('#btn_pergaminho').click(function(){
-				$(".msg_erro").hide();
+				$(".msgs").hide();
 				$.ajax({
 					url: '/pergaminhos',
 					method: 'GET',
@@ -55,9 +55,16 @@
 
 	    <div class="container">
 
-				<% if(comando_invalido == 'S')	{	%>
-					<div class="alert alert-danger msg_erro">
+				<% if(msg == 'E')	{	%>
+					<div class="alert alert-danger msgs">
 						<strong> Operação inválida!</strong>
+					</div>
+
+					<% }%>
+
+				<% if(msg == 'S')	{	%>
+					<div class="alert alert-success msgs">
+						<strong> Operação salva com sucesso!</strong>
 					</div>
 
 					<% }%>
