@@ -27,12 +27,19 @@ module.exports.logout = function(app, req,res){
 }
 
 module.exports.suditos = function(app, req,res){
-
   if(!req.session.autorizado){
     res.send('Usuário precisa fazer login');
     return;
   }
-    res.render("aldeoes", {validacao: {}});
+
+  //Traz acoes disponiveis
+  var connection = app.config.dbConnection;
+  var JogoDAO = new app.app.models.JogoDAO(connection);
+
+  JogoDAO.getAcoesDisponiveis(req.session.usuario, res);
+  return;
+
+  //res.render("aldeoes", {validacao: {}});
 }
 
 module.exports.pergaminhos = function(app, req,res){
@@ -46,9 +53,9 @@ module.exports.pergaminhos = function(app, req,res){
   var connection = app.config.dbConnection;
   var JogoDAO = new app.app.models.JogoDAO(connection);
 
-    JogoDAO.getAcoes(req.session.usuario, res);
-
-    res.render("pergaminhos", {validacao: {}});
+  JogoDAO.getAcoes(req.session.usuario, res);
+  return;
+  //res.render("pergaminhos", {validacao: {}});
 }
 
 module.exports.ordenar_acao_sudito = function(app, req,res){
@@ -60,7 +67,7 @@ module.exports.ordenar_acao_sudito = function(app, req,res){
 
   var dadosForm = req.body;
 
-  req.assert('acao',"Ação deve ser informada").notEmpty();
+  req.assert('cod_acao',"Ação deve ser informada").notEmpty();
   req.assert('quantidade',"Quantidade deve ser informada").notEmpty();
 
   var erros = req.validationErrors();
