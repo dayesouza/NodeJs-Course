@@ -3,8 +3,17 @@
 	
 	<ul>
 		<% for(var i = 0; i < acoes.length; i++) { %>
-			<li><%= acoes[i].quantidade%></li>
-			<li><%= acoes[i].acao %></li>
+			<li><%= acoes[i].quantidade%> <%= acoes[i].acao.descricao_acao%>.
+			<% 
+				var momento_atual = new Date().getTime();
+				var final_acao = acoes[i].time_insercao;
+
+				var milisegundos_fim = acoes[i].time_insercao + (acoes[i].acao.minutos * 60000);
+
+				var tempo_restante = Math.abs((momento_atual - milisegundos_fim) / 60000).toFixed(2);
+			%>
+			<%= tempo_restante %> segundos restantes
+			</li>
 		<% }%>
 		<!-- <li>1 enforcamento(s) programado - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>
 		<li>2 aldeão(ões) em treinamento de magia - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>

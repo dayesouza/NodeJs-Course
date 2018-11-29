@@ -48,10 +48,8 @@ JogoDAO.prototype.acao = function(acao) {
   this._connection.open(function(err, mongoclient) {
     //abri conexao com o servidor e db
     mongoclient.collection("acoes", function(err, collection) {
-      //Pega a coleção
-      var date = new Date();
-      
-      acao.termina_em = date.getTime() +300000; //default 5 minutos
+      //Pega a coleção      
+      acao.time_insercao = new Date().getTime();
       acao.acao = retornaAcao(acao.cod_acao);
       delete acao.cod_acao;
       collection.insert(acao); 
@@ -96,7 +94,6 @@ JogoDAO.prototype.getAcoes = function(usuario, res) {
       //Pega a coleção
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       collection.find({ usuario: usuario }).toArray(function(err, result) {
-        console.log(result);
         res.render("pergaminhos", {acoes: result});
         mongoclient.close();
       });
