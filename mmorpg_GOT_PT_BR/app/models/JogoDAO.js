@@ -1,6 +1,6 @@
 function JogoDAO(connection) {
   this._connection = connection();
-  this._acao;
+  this._lista_acoes = [];
 }
 
 JogoDAO.prototype.gerarParametros = function(usuario) {
@@ -49,15 +49,26 @@ JogoDAO.prototype.acao = function(acao) {
     //abri conexao com o servidor e db
     mongoclient.collection("acoes", function(err, collection) {
       //Pega a coleção
-      // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       var date = new Date();
-
-      //TODO: Criar na base as acoes e pegar o tempo necessario dela
+      
       acao.termina_em = date.getTime() +300000; //default 5 minutos
+      acao.acao = retornaAcao(acao.cod_acao);
+      delete acao.cod_acao;
       collection.insert(acao); 
+
       mongoclient.close();
     });
   });
+
+  function retornaAcao(codigo){
+    for(var i = 0; i < this._lista_acoes.length; i++){
+      console.log("codigo", codigo);
+
+      if(this._lista_acoes[i].codigo == codigo){
+        return this._lista_acoes[i];
+      }
+    }
+  }
 };
 
 JogoDAO.prototype.getAcoesDisponiveis = function(usuario, res) {
@@ -67,6 +78,7 @@ JogoDAO.prototype.getAcoesDisponiveis = function(usuario, res) {
       //Pega a coleção
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       collection.find().toArray(function(err, result) {
+        this._lista_acoes = result;
         res.render("aldeoes", {lista_acoes: result});     
         mongoclient.close();
       });
@@ -84,6 +96,7 @@ JogoDAO.prototype.getAcoes = function(usuario, res) {
       //Pega a coleção
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       collection.find({ usuario: usuario }).toArray(function(err, result) {
+        console.log(result);
         res.render("pergaminhos", {acoes: result});
         mongoclient.close();
       });
