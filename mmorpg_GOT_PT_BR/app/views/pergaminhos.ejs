@@ -10,9 +10,11 @@
 
 				var milisegundos_fim = acoes[i].time_insercao + (acoes[i].acao.minutos * 60000);
 
-				var tempo_restante = Math.abs((momento_atual - milisegundos_fim) / 60000).toFixed(2);
+				var tempo_restante = Math.abs((momento_atual - milisegundos_fim) / 60000);
+
 			%>
-			<%= tempo_restante %> segundos restantes
+
+			<span class='tempo_restante'><%= tempo_restante %></span> <span class='seg'> segundos restantes</span>
 			</li>
 		<% }%>
 		<!-- <li>1 enforcamento(s) programado - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>

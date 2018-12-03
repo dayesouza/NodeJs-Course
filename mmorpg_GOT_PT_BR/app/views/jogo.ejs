@@ -34,11 +34,38 @@
 					method: 'GET',
 					success: function(data){
 						$('#acoes').html(data);
+
+						clearTimeout(timerId);
+						cronometro();
+
 					}
 				})
 			})
 
 		})
+
+		var timerId = null;
+		function cronometro(){
+			
+				$('.tempo_restante').each(function(){
+					var segundo_atual = parseInt($(this).html()) -1;
+
+					//salvar na base como concluido
+					if(segundo_atual == -1){
+						$(this).next('.seg').html("CONCLUIDO");
+						$(this).removeClass('tempo_restante');
+					}
+					else if(segundo_atual < -1){
+
+					}
+					else{
+						$(this).html(segundo_atual);
+					}
+
+				});
+
+				timerId = setTimeout(cronometro,1000);
+		}
 	</script>
 
 	</head>
