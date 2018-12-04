@@ -2,6 +2,7 @@ var ObjectID = require('mongodb').ObjectID;
 function JogoDAO(connection) {
   this._connection = connection();
   this._lista_acoes = [];
+  this._jogo;
 }
 
 JogoDAO.prototype.gerarParametros = function(usuario) {
@@ -12,7 +13,7 @@ JogoDAO.prototype.gerarParametros = function(usuario) {
       //Pega a coleção
       collection.insert({
         usuario: usuario,
-        moeda: 15,
+        moedas: 15,
         suditos: 10,
         temor: Math.floor(Math.random() * 1000),
         sabedoria: Math.floor(Math.random() * 1000),
@@ -33,7 +34,8 @@ JogoDAO.prototype.iniciaJogo = function(res, usuario,casa, msg) {
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       collection.find({ usuario: usuario }).toArray(function(err, result) {
 
-
+        this._jogo = result[0];
+        console.log(result[0]);
         res.render("jogo", {img_casa: casa, jogo: result[0], msg: msg})
 
         mongoclient.close();
@@ -42,10 +44,18 @@ JogoDAO.prototype.iniciaJogo = function(res, usuario,casa, msg) {
   });
 };
 
-JogoDAO.prototype.acao = function(acao) {
+JogoDAO.prototype.acao = function(acao,res) {
 
-  this._connection.open(function(err, mongoclient) {
+  return this._connection.open(function(err, mongoclient) {
     //abri conexao com o servidor e db
+    //verificar se pode realizar uma acao e tem pessoa e moeda
+    console.log(this._jogo.moedas);
+    if(this._jogo.moedas <= 0){
+      mongoclient.close();
+      res.redirect("jogo?msg=M");
+      return;
+    }
+
     acao.acao = retornaAcao(acao.cod_acao);
     mongoclient.collection("acoes", function(err, collection) {
       //Pega a coleção      
@@ -60,10 +70,13 @@ JogoDAO.prototype.acao = function(acao) {
 
       var quantidade = acao.quantidade;
       var valor_moedas =  -(acao.acao.moedas * quantidade);
-      collection.update({usuario: acao.usuario}, {$inc: {moeda: valor_moedas}}); 
+      collection.update({usuario: acao.usuario}, {$inc: {moedas: valor_moedas}}); 
 
       mongoclient.close();
     });
+
+    res.redirect("jogo?msg=S");
+    return;
   });
 
   function retornaAcao(codigo){
@@ -98,9 +111,17 @@ JogoDAO.prototype.getAcoes = function(usuario, res) {
     //abri conexao com o servidor e db
     mongoclient.collection("acoes", function(err, collection) {
       //Pega a coleção
+    var _acoes;
+
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
       collection.find({ usuario: usuario, termina_em: {$gt:new Date().getTime()}}).toArray(function(err, result) {
-        res.render("pergaminhos", {acoes: result});
+        _acoes = result;
+      });
+
+      collection.find({ usuario: usuario, termina_em: {$lt:new Date().getTime()}}).sort({termina_em:1}).limit(2)
+      .toArray(function(err, result) {
+        
+        res.render("pergaminhos", {acoes: _acoes, acoes_anteriores: result});
         mongoclient.close();
       });
     });

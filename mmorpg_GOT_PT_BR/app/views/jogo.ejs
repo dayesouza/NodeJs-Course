@@ -46,20 +46,17 @@
 
 		var timerId = null;
 		function cronometro(){
-			console.log('ue');
 				$('.tempo_restante').each(function(){
-					// var tempo = ((parseInt($(this).html()) -1000) / 1000).toFixed(2);
 					var tempo = ((parseInt($(this).html()) -1));
-					// var tempo = (parseInt($(this).html()) -1000)
 					//salvar na base como concluido
 					if(tempo < 0){
-						$(this).next('.seg').html("CONCLUIDO");
+						$(this).next('.seg').html("Concluído");
+						$(this).next('.seg').next('a.revogar_ordem').remove();
 						$(this).removeClass('tempo_restante');
 					}
 					else{
 						$(this).html(parseInt(tempo));
 					}
-
 				});
 
 				timerId = setTimeout(cronometro,1000);
@@ -83,6 +80,13 @@
 				<% if(msg == 'E')	{	%>
 					<div class="alert alert-danger msgs">
 						<strong> Operação inválida!</strong>
+					</div>
+
+					<% }%>
+
+				<% if(msg == 'M')	{	%>
+					<div class="alert alert-danger msgs">
+						<strong> Operação inválida! Você não possui as moedas necessárias.</strong>
 					</div>
 
 					<% }%>
@@ -158,8 +162,8 @@
 					<div class="col-sm-8"></div>
 					
 					<div class="col-sm-2">
-						<img src="images/outros/moeda.jpg" title="Moeda" alt="Moeda"/>
-						<span><%= jogo.moeda %></span>
+						<img src="images/outros/moeda.jpg" title="Moedas" alt="Moedas"/>
+						<span><%= jogo.moedas %></span>
 					</div>
 					
 				</div>
