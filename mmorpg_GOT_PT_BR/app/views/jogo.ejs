@@ -46,20 +46,18 @@
 
 		var timerId = null;
 		function cronometro(){
-			
+			console.log('ue');
 				$('.tempo_restante').each(function(){
-					var segundo_atual = parseInt($(this).html()) -1;
-
+					// var tempo = ((parseInt($(this).html()) -1000) / 1000).toFixed(2);
+					var tempo = ((parseInt($(this).html()) -1));
+					// var tempo = (parseInt($(this).html()) -1000)
 					//salvar na base como concluido
-					if(segundo_atual == -1){
+					if(tempo < 0){
 						$(this).next('.seg').html("CONCLUIDO");
 						$(this).removeClass('tempo_restante');
 					}
-					else if(segundo_atual < -1){
-
-					}
 					else{
-						$(this).html(segundo_atual);
+						$(this).html(parseInt(tempo));
 					}
 
 				});
@@ -92,6 +90,13 @@
 				<% if(msg == 'S')	{	%>
 					<div class="alert alert-success msgs">
 						<strong> Operação salva com sucesso!</strong>
+					</div>
+
+					<% }%>
+
+				<% if(msg == 'D')	{	%>
+					<div class="alert alert-success msgs">
+						<strong> Ordem revogada com sucesso!</strong>
 					</div>
 
 					<% }%>

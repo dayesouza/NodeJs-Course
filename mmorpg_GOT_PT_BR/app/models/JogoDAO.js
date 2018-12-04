@@ -1,3 +1,4 @@
+var ObjectID = require('mongodb').ObjectID;
 function JogoDAO(connection) {
   this._connection = connection();
   this._lista_acoes = [];
@@ -37,8 +38,6 @@ JogoDAO.prototype.iniciaJogo = function(res, usuario,casa, msg) {
 
         mongoclient.close();
       });
-
-      mongoclient.close();
     });
   });
 };
@@ -51,7 +50,7 @@ JogoDAO.prototype.acao = function(acao) {
     mongoclient.collection("acoes", function(err, collection) {
       //Pega a coleção      
       acao.time_insercao = new Date().getTime();
-      acao.status = "Em andamento";
+      acao.termina_em = new Date().getTime() + (acao.acao.minutos * 60000);
       delete acao.cod_acao;
       collection.insert(acao); 
     });
@@ -61,8 +60,6 @@ JogoDAO.prototype.acao = function(acao) {
 
       var quantidade = acao.quantidade;
       var valor_moedas =  -(acao.acao.moedas * quantidade);
-      console.log(quantidade);
-      console.log(valor_moedas);
       collection.update({usuario: acao.usuario}, {$inc: {moeda: valor_moedas}}); 
 
       mongoclient.close();
@@ -91,8 +88,6 @@ JogoDAO.prototype.getAcoesDisponiveis = function(usuario, res) {
         res.render("aldeoes", {lista_acoes: result});     
         mongoclient.close();
       });
-
-      mongoclient.close();
     });
   });
 
@@ -104,9 +99,23 @@ JogoDAO.prototype.getAcoes = function(usuario, res) {
     mongoclient.collection("acoes", function(err, collection) {
       //Pega a coleção
       // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
-      collection.find({ usuario: usuario, status: 'Em andamento' }).toArray(function(err, result) {
+      collection.find({ usuario: usuario, termina_em: {$gt:new Date().getTime()}}).toArray(function(err, result) {
         res.render("pergaminhos", {acoes: result});
         mongoclient.close();
+      });
+    });
+  });
+
+};
+
+JogoDAO.prototype.revogar_acao = function(id_acao, res) {
+  this._connection.open(function(err, mongoclient) {
+    //abri conexao com o servidor e db
+    mongoclient.collection("acoes", function(err, collection) {
+      //Pega a coleção
+      // collection.find({usuario:  usuario.usuario, senha:  usuario.senha}).toArray(function(err, result){
+      collection.remove({ _id: ObjectID(id_acao)},function(err, result){
+        res.redirect("jogo?msg=D");
       });
 
       mongoclient.close();

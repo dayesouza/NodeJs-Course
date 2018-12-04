@@ -3,18 +3,14 @@
 	
 	<ul>
 		<% for(var i = 0; i < acoes.length; i++) { %>
-			<li><%= acoes[i].quantidade%> <%= acoes[i].acao.descricao_acao%>.
+			<li><%= acoes[i].quantidade%> aldeão(ões) na ação <%= acoes[i].acao.nome%>
 			<% 
 				var momento_atual = new Date().getTime();
-				var final_acao = acoes[i].time_insercao;
-
-				var milisegundos_fim = acoes[i].time_insercao + (acoes[i].acao.minutos * 60000);
-
-				var tempo_restante = Math.abs((momento_atual - milisegundos_fim) / 60000);
-
+				var tempo_restante = (acoes[i].termina_em - momento_atual) / 1000;
 			%>
 
-			<span class='tempo_restante'><%= tempo_restante %></span> <span class='seg'> segundos restantes</span>
+			<small><span class='tempo_restante'><%= tempo_restante %></span> <span class='seg'> segundos restantes</span></small>
+			<a href='/revogar_acao?id=<%= acoes[i]._id%>'> revogar ordem </a>
 			</li>
 		<% }%>
 		<!-- <li>1 enforcamento(s) programado - <small>restam 00000 segundos - <a href="#">revogar ordem</a></small></li>

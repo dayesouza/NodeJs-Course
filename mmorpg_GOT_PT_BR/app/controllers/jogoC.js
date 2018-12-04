@@ -84,3 +84,13 @@ module.exports.ordenar_acao_sudito = function(app, req,res){
   JogoDAO.acao(dadosForm);
   res.redirect("jogo?msg=S");
 }
+
+module.exports.revogar_acao = function(app, req, res){
+  var url_query = req.query;
+  
+  var connection = app.config.dbConnection;
+  var JogoDAO = new app.app.models.JogoDAO(connection);
+
+  JogoDAO.revogar_acao(url_query.id, res);
+
+}
