@@ -4,14 +4,23 @@ var buffer_body_response = [];
 
 var options = {
   hostname: '196.200.0.116',
-  port: '8000',
+  port: '3100',
   path: '/',
+  method: 'POST',
   headers: {
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'Content-type' : 'application/json'
   }
 };
 
-http.get(options, function(res){
+var html = 'name=Joseph'; //x-www-form-urlencoded
+var json = {
+  name: 'Joseph'
+}
+var string_json = JSON.stringify(json);
+
+var req = http.request(options, function(res){
+
   res.on("data", function(piece){
     buffer_body_response.push(piece);
   })
@@ -23,3 +32,7 @@ http.get(options, function(res){
 
  // })
 });
+
+req.write(string_json);
+
+req.end();

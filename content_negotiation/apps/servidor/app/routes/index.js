@@ -13,4 +13,9 @@ module.exports = function(application){
 			}
 		});
 	});
+
+	application.post('/', function(req, res){
+		var data = req.body;
+		res.send(data);
+	})
 }
